@@ -3,11 +3,11 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: After identifying a box that only contains two possible solutions, we can search each of the peer boxes for the same two possible solutions. If this naked pair is identified, for that "unit" *only* (local 3x3 square, row, column, or diagnoal) we can remove those two values from the other 7 boxes.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: In the same manner that we add a constraint to the puzzle such as row or column, we can add the diagonals as two more "units" to be considered for limiting the solution space of the group of boxes in each new diaganal "unit."
 
 ### Install
 
