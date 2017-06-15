@@ -35,7 +35,20 @@ def custom_score(game, player):
         The heuristic value of the current game state to the specified player.
     """
     # TODO: finish this function!
-    raise NotImplementedError
+    # set scores for winning/losing
+    if game.is_loser(player):
+        return float("-inf")
+    if game.is_winner(player):
+        return float("inf")
+
+    # get number of blank spaces left
+    spaces = len(game.get_blank_spaces())
+    # get number of remaining moves
+    remaining = len(game.get_legal_moves(player))
+    # define new score: keep as many remaining spaces of available open
+    score = remaining / float(spaces)
+
+    return float(score)
 
 
 def custom_score_2(game, player):
@@ -61,7 +74,22 @@ def custom_score_2(game, player):
         The heuristic value of the current game state to the specified player.
     """
     # TODO: finish this function!
-    raise NotImplementedError
+    # set scores for winning/losing
+    if game.is_loser(player):
+        return float("-inf")
+    if game.is_winner(player):
+        return float("inf")
+
+    # get player pos
+    pos = game.get_player_location(player)
+    # get opponent position
+    opos = game.get_player_location(game.get_opponent(player))
+    # set generic score
+    score = 0
+    # define new score: stay as far away from opponent
+    if pos and opos:
+        score = abs(opos[0]-pos[0])+abs(opos[1]-pos[1])
+    return float(score)
 
 
 def custom_score_3(game, player):
@@ -87,7 +115,22 @@ def custom_score_3(game, player):
         The heuristic value of the current game state to the specified player.
     """
     # TODO: finish this function!
-    raise NotImplementedError
+    # set scores for winning/losing
+    if game.is_loser(player):
+        return float("-inf")
+    if game.is_winner(player):
+        return float("inf")
+
+    # get player pos
+    pos = game.get_player_location(player)
+    # get center position
+    cpos = (game.width/2.0, game.height/2.0)
+    # set generic score
+    score = 0
+    # define new score: stay as as close to center as possible
+    if pos and cpos:
+        score = abs(cpos[0]-pos[0])+abs(cpos[1]-pos[1])
+    return float(score)
 
 
 class IsolationPlayer:
