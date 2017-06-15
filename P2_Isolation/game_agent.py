@@ -355,10 +355,24 @@ class AlphaBetaPlayer(IsolationPlayer):
         try:
             # The try/except block will automatically catch the exception
             # raised when the timer is about to expire.
-            return self.alphabeta(game, self.search_depth)
+
+            # create a counter for depth starting at next pli aka 1
+            pli = 1
+            while True:
+                # run the ab function
+                best_move = self.alphabeta(game, pli)
+                # increment the depth
+                pli += 1
+                # get best value
+                best_val =self.score(game.forecast_move(best_move),self)
+                # if val reaches infinity, break the loop
+                if best_val == float('inf') or best_val == float('-inf'):
+                    break
+            #return self.alphabeta(game, self.search_depth)
 
         except SearchTimeout:
             pass  # Handle any actions required after timeout as needed
+            #return best_move
 
         # Return the best move from the last completed search iteration
         return best_move
