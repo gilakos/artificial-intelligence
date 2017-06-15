@@ -348,7 +348,6 @@ class AlphaBetaPlayer(IsolationPlayer):
         """
         self.time_left = time_left
 
-        # TODO: finish this function!
         # Initialize the best move so that this function returns something
         # in case the search fails due to timeout
         best_move = (-1, -1)
@@ -416,26 +415,31 @@ class AlphaBetaPlayer(IsolationPlayer):
 
         # get available legal moves from board
         legal_moves = game.get_legal_moves()
-        # replace with (-1,-1) if there are no legal moves
-        if not legal_moves:
-            legal_moves = (-1, -1)
 
         # create a generic best move
         best_move = (-1, -1)
         # define a generic starting value for best value
         best_val = float('-inf')
+
+        # replace with (-1,-1) if there are no legal moves
+        if not legal_moves:
+            return best_move
+
         # loop through each move
         # choose the move that has the max value after starting the recursion through mmin
         for move in legal_moves:
             # get the forecasted board for the child node
             f_game = game.forecast_move(move)
             # get the minimum value for the current child nodes (recursively)
-            val, b_move = self.abmax(f_game, depth-1, alpha, beta)
+            val = self.abmin(f_game, depth-1, alpha, beta)
+            # update alpha for pruning
+            alpha = max(alpha, val)
             # get the maximum of the best val and the found val
             # replace best val and best move
-            if val > best_val:
+            if val >= best_val:
                 best_val = val
                 best_move = move
+
         return best_move
 
     def abmax(self, game, depth, alpha, beta):
@@ -454,10 +458,15 @@ class AlphaBetaPlayer(IsolationPlayer):
 
         # get available legal moves from board
         legal_moves = game.get_legal_moves()
-        # if terminal node or no legal moves
-        if depth == 0 or not legal_moves:
-            # return the score of the current node
-            return (-1, -1)
+        # if no legal moves
+        if not legal_moves:
+            # return the current state
+            return game.utility(self)
+
+        # if terminal node
+        if depth == 0:
+            # return the score of the terminal node
+            return self.score(game, self)
 
         # set the best value to negative infinity
         best_val = float('-inf')
@@ -469,18 +478,17 @@ class AlphaBetaPlayer(IsolationPlayer):
             # get the forecasted board for the child node
             f_game = game.forecast_move(move)
             # get the minimum value for the subsequent child nodes (recursively)
-            val, b_move = self.abmin(f_game, depth - 1, alpha, beta)
+            val = self.abmin(f_game, depth - 1, alpha, beta)
             # get the maximum of the best val and the found val
             if val > best_val:
                 best_val = val
-                best_move = move
             #best_val = max(val, best_val)
             # if best_val is greater than or equal to beta
             if best_val >= beta:
-                return best_val, best_move
+                return best_val
             alpha = max(alpha, best_val)
         # return the best value
-        return best_val, best_move
+        return best_val
 
     def abmin(self, game, depth, alpha, beta):
         '''
@@ -498,10 +506,15 @@ class AlphaBetaPlayer(IsolationPlayer):
 
         # get available legal moves from board
         legal_moves = game.get_legal_moves()
-        # if terminal node or no legal moves
-        if depth == 0 or not legal_moves:
-            # return the score of the current node
-            return (-1, -1)
+        # if no legal moves
+        if not legal_moves:
+            # return the current state
+            return game.utility(self)
+
+        # if terminal node
+        if depth == 0:
+            # return the score of the terminal node
+            return self.score(game, self)
 
         # set the best value to positive infinity
         best_val = float('inf')
@@ -513,16 +526,15 @@ class AlphaBetaPlayer(IsolationPlayer):
             # get the forecasted board for the child node
             f_game = game.forecast_move(move)
             # get the maximum value for the subsequent child nodes (recursively)
-            val, b_move = self.abmax(f_game, depth - 1, alpha, beta)
+            val = self.abmax(f_game, depth - 1, alpha, beta)
             # get the min of the best val and the found val
             if val < best_val:
                 best_val = val
-                best_move = move
             #best_val = min(val, best_val)
             # if best_val is less than or equal to alpha
             if best_val <= alpha:
                 # return the best value and best move
-                return best_val, best_move
+                return best_val
             beta = min(beta, best_val)
         # return the best value and best move
-        return best_val, best_move
+        return best_val
