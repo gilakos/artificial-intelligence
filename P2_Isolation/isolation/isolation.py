@@ -172,6 +172,7 @@ class Board(object):
         return (h, w)
 
     def get_legal_moves(self, player=None):
+        # type: (object) -> object
         """Return the list of all legal moves for the specified player.
 
         Parameters

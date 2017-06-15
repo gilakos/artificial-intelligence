@@ -213,7 +213,13 @@ class MinimaxPlayer(IsolationPlayer):
             raise SearchTimeout()
 
         # TODO: finish this function!
-        raise NotImplementedError
+
+        # get available legal moves from board
+        legal_moves = game.get_legal_moves()
+        # replace with (-1,-1) if there are no legal moves
+        if not legal_moves:
+            legal_moves = (-1, -1)
+        return legal_moves
 
 
 class AlphaBetaPlayer(IsolationPlayer):
