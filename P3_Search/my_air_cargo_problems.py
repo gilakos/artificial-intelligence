@@ -188,7 +188,7 @@ class AirCargoProblem(Problem):
         # create a knowledge base object
         kb = PropKB()
         # decode the state in the knowledge base
-        kb.tell(decode(state, self.state_map).pos_sentence())
+        kb.tell(decode_state(state, self.state_map).pos_sentence())
         # loop through the actions in the actions list
         for action in self.actions_list:
             # set possibility toggle to true
