@@ -15,7 +15,6 @@ from functools import lru_cache
 class AirCargoProblem(Problem):
     def __init__(self, cargos, planes, airports, initial: FluentState, goal: list):
         """
-
         :param cargos: list of str
             cargos in the problem
         :param planes: list of str
@@ -184,7 +183,31 @@ class AirCargoProblem(Problem):
         :return: list of Action objects
         """
         # TODO implement
+        # create a list for possible actions
         possible_actions = []
+        # create a knowledge base object
+        kb = PropKB()
+        # decode the state in the knowledge base
+        kb.tell(decode(state, self.state_map).pos_sentence())
+        # loop through the actions in the actions list
+        for action in self.actions_list:
+            # set possibility toggle to true
+            is_poss = True
+            # loop through the positive preconditions of the current action
+            for clause in action.precond_pos:
+                # if the clause is not present, set toggle to false
+                if clause not in kb.clauses:
+                    is_poss = False
+            # loop through the negative preconditions of the current state
+            for clause in action.precond_neg:
+                # if the clause is present, set toggle to false
+                if clause in kb.clauses:
+                    is_poss = False
+            # after the tests, if possibility toggle is still true...
+            if is_poss == True:
+                # append the action to the possible actions
+                possible_actions.append(action)
+        # return the resulting actions
         return possible_actions
 
     def result(self, state: str, action: Action):
@@ -197,7 +220,35 @@ class AirCargoProblem(Problem):
         :return: resulting state after action
         """
         # TODO implement
+        # create an empty new state
         new_state = FluentState([], [])
+        # decode the old state
+        old_state = decode_state(state, self.state_map)
+        # loop through the fluents in the old state - positive
+        for fluent in old_state.pos:
+            # if pos fluent not in the removal effect
+            if fluent not in action.effect_rem:
+                # add the fluent to the new state - positive
+                new_state.pos.append(fluent)
+        # loop through the fluents in the action - additive
+        for fluent in action.effect_add:
+            # if pos fluent not in the new state - positive
+            if fluent not in new_state.pos:
+                # add the fluent to the new state - positive
+                new_state.pos.append(fluent)
+        # loop through the fluents in the old state - neg
+        for fluent in old_state.neg:
+            # if neg fluent not in the additive effect
+            if fluent not in action.effect_add:
+                # add the fluent to the new state - neg
+                new_state.neg.append(fluent)
+        # loop through the fluents in the action - removal
+        for fluent in action.effect_rem:
+            # if neg fluent not in the new state - neg
+            if fluent not in new_state.neg:
+                # add the fluent to the new state - neg
+                new_state.neg.append(fluent)
+        # return the resulting state encoded
         return encode_state(new_state, self.state_map)
 
     def goal_test(self, state: str) -> bool:
