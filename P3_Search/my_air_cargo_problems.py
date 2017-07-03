@@ -290,6 +290,18 @@ class AirCargoProblem(Problem):
         """
         # TODO implement (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
         count = 0
+
+        # create a knowledge base
+        kb = PropKB()
+        # decode the state
+        kb.tell(decode_state(node.state, self.state_map).pos_sentence())
+        # loop through the goals
+        for clause in self.goal:
+            # if the goal is not present
+            if clause not in kb.clauses:
+                # increment the counter
+                count += 1
+        # return the count of remaining steps
         return count
 
 
