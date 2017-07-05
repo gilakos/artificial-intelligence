@@ -19,7 +19,7 @@
         <entry file="file://$PROJECT_DIR$/my_air_cargo_problems.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="633">
-              <caret line="290" column="86" lean-forward="true" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
+              <caret line="290" column="86" lean-forward="false" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -30,8 +30,8 @@
       <file leaf-file-name="my_planning_graph.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/my_planning_graph.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="539" column="58" lean-forward="true" selection-start-line="539" selection-start-column="58" selection-end-line="539" selection-end-column="58" />
+            <state relative-caret-position="520">
+              <caret line="539" column="58" lean-forward="false" selection-start-line="539" selection-start-column="58" selection-end-line="539" selection-end-column="58" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
               </folding>
@@ -92,10 +92,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="3600" />
+    <option name="x" value="2640" />
     <option name="y" value="23" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+    <option name="width" value="960" />
+    <option name="height" value="1053" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -301,10 +301,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3600" y="23" width="1920" height="1057" extended-state="6" />
-    <editor active="true" />
+    <frame x="2640" y="23" width="960" height="1053" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13164824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2662407" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -446,7 +446,7 @@
     <entry file="file://$PROJECT_DIR$/my_air_cargo_problems.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="633">
-          <caret line="290" column="86" lean-forward="true" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
+          <caret line="290" column="86" lean-forward="false" selection-start-line="290" selection-start-column="86" selection-end-line="290" selection-end-column="86" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>
@@ -473,8 +473,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/my_planning_graph.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="539" column="58" lean-forward="true" selection-start-line="539" selection-start-column="58" selection-end-line="539" selection-end-column="58" />
+        <state relative-caret-position="520">
+          <caret line="539" column="58" lean-forward="false" selection-start-line="539" selection-start-column="58" selection-end-line="539" selection-end-column="58" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
           </folding>
