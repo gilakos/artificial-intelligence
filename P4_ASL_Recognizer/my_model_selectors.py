@@ -92,12 +92,12 @@ class SelectorCV(ModelSelector):
                 x_train, lengths_train = combine_sequences(train_idx, self.sequences)
                 # get the testing data with combine sequence utility function
                 x_test, lengths_test = combine_sequences(test_idx, self.sequences)
-                # create the model
-                model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
-                # fit the model
-                model.fit(x_train, lengths_train)
                 # add try/except to eliminate non-viable models
                 try:
+                    # create the model
+                    model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
+                    # fit the model
+                    model.fit(x_train, lengths_train)
                     # calculate the score of the model aka Log Likelihood
                     score = model.score(x_test, lengths_test)
                     # add score to list
@@ -144,12 +144,12 @@ class SelectorBIC(ModelSelector):
         for num_components in range(self.min_n_components, self.max_n_components + 1):
             # set the p value for the BIC formula - constant for this loop
             p_val = num_components^2 + 2*num_components*len(self.X[0]) - 1
-            # create the model
-            model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
-            # fit the model
-            model.fit(self.X, self.lengths)
             # add try/except to eliminate non-viable models
             try:
+                # create the model
+                model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
+                # fit the model
+                model.fit(self.X, self.lengths)
                 # calculate the score of the model aka Log Likelihood
                 score = model.score(self.X, self.lengths)
                 # calculate the BIC score
@@ -198,12 +198,13 @@ class SelectorDIC(ModelSelector):
             anti_score = 0.0
             # create a counter for the other words
             word_count = 0
-            # create the model
-            model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
-            # fit the model
-            model.fit(self.X, self.lengths)
+
             # add try/except to eliminate non-viable models
             try:
+                # create the model
+                model = GaussianHMM(n_components=num_components, n_iter=1000, random_state=self.random_state)
+                # fit the model
+                model.fit(self.X, self.lengths)
                 # calculate the score of the model aka Log Likelihood
                 score = model.score(self.X, self.lengths)
 
