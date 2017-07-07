@@ -425,17 +425,26 @@ class PlanningGraph():
         :return: bool
         """
         # TODO test for Inconsistent Effects between nodes
-        result = False
 
-        # loop through children state nodes in Action 1
-        for s1 in node_a1.children:
-            # loop through children state nodes in Action 2
-            for s2 in node_a2.children:
+        # loop through positive effects in Action 1
+        for s1 in node_a1.action.effect_add:
+            # loop through negative effects in Action 2
+            for s2 in node_a2.action.effect_rem:
                 # test mutex
-                if s1.is_mutex(s2):
-                    result = True
-                    break
-        return result
+                if s1 == s2:
+                    # found - return true
+                    return True
+
+        # loop through negative effects in Action 1
+        for s1 in node_a1.action.effect_rem:
+            # loop through positive effects in Action 2
+            for s2 in node_a2.action.effect_add:
+                # test mutex
+                if s1 == s2:
+                    # found - return true
+                    return True
+        # if we get to this point, return false
+        return False
 
     def interference_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:
         """
@@ -451,17 +460,44 @@ class PlanningGraph():
         :param node_a2: PgNode_a
         :return: bool
         """
-        # TODO test for Interference between nodes
-        result = False
+        # TODO test for Interference between nodes  # loop through children state nodes in Action 1
 
-        # loop through children state nodes in Action 1
-        for s1 in node_a1.children:
-            # loop through children state nodes in Action 2
-            for s2 in node_a2.parents:
+        # loop through positive effects in Action 1
+        for s1 in node_a1.action.effect_add:
+            # loop through negative preconditions in Action 2
+            for s2 in node_a2.action.precond_neg:
                 # test mutex
-                if s1.is_mutex(s2):
-                    result = True
-        return result
+                if s1 == s2:
+                    # found - return true
+                    return True
+
+        # loop through negative effects in Action 1
+        for s1 in node_a1.action.effect_rem:
+            # loop through positive preconditions in Action 2
+            for s2 in node_a2.action.precond_pos:
+                # test mutex
+                if s1 == s2:
+                    # found - return true
+                    return True
+        # loop through positive effects in Action 2
+        for s2 in node_a2.action.effect_add:
+            # loop through negative preconditions in Action 1
+            for s1 in node_a1.action.precond_neg:
+                # test mutex
+                if s1 == s2:
+                    # found - return true
+                    return True
+
+        # loop through negative effects in Action 2
+        for s2 in node_a2.action.effect_rem:
+            # loop through positive preconditions in Action 1
+            for s1 in node_a1.action.precond_pos:
+                # test mutex
+                if s1 == s2:
+                    # found - return true
+                    return True
+        # if we get to this point, return false
+        return False
 
     def competing_needs_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:
         """
@@ -475,16 +511,14 @@ class PlanningGraph():
         """
 
         # TODO test for Competing Needs between nodes
-        result = False
-
-        # loop through parent state nodes in Action 1
+        # loop through parent action nodes in Action 1
         for s1 in node_a1.parents:
             # loop through parent state nodes in Action 2
             for s2 in node_a2.parents:
                 # test mutex
                 if s1.is_mutex(s2):
-                    result = True
-        return result
+                    return True
+        return False
 
     def update_s_mutex(self, nodeset: set):
         """ Determine and update sibling mutual exclusion for S-level nodes
@@ -519,7 +553,12 @@ class PlanningGraph():
         :return: bool
         """
         # TODO test for negation between nodes
-        return node_s1.__eq__(node_s2)
+
+        # test equality
+        if node_s1.symbol == node_s2.symbol and node_s1.is_pos != node_s2.is_pos:
+            return True
+        # if we get here, return False
+        return False
 
     def inconsistent_support_mutex(self, node_s1: PgNode_s, node_s2: PgNode_s):
         """
@@ -538,16 +577,15 @@ class PlanningGraph():
         :return: bool
         """
         # TODO test for Inconsistent Support between nodes
-        result = False
-
         # loop through parent action nodes in Action 1
         for a1 in node_s1.parents:
             # loop through parent state nodes in Action 2
             for a2 in node_s2.parents:
-                # test mutex
-                if a1.is_mutex(a2):
-                    result = True
-        return result
+                # test negation of mutex
+                if not a1.is_mutex(a2):
+                    return False
+        # if we get here, return true
+        return True
 
     def h_levelsum(self) -> int:
         """The sum of the level costs of the individual goals (admissible if goals independent)
@@ -557,4 +595,26 @@ class PlanningGraph():
         level_sum = 0
         # TODO implement
         # for each goal in the problem, determine the level cost, then add them together
+        # create a set for non-repeating visited states
+        visited = set()
+        # loop through the goals in the problem
+        for g in self.problem.goal:
+            # set the level index to neg 1
+            l_idx = -1
+            # loop through the state levels
+            for level in self.s_levels:
+                # add one to the level index
+                l_idx += 1
+                # loop through the states in the level
+                for state in level:
+                    # test if the state symbol is the goal AND if state hasn't been visited
+                    if g == state.symbol and state not in visited:
+                        # add the level index to the sum
+                        level_sum += l_idx
+                        # add the state to the visited states
+                        visited.add(state)
+                        # exit the state loop
+                        break
+        # remove one from the sum
+        level_sum -= 1
         return level_sum
