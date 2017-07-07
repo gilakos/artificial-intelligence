@@ -1,5 +1,14 @@
+# non-heuristic planning solution searches (uninformed)
 
-# non-heuristic planning solution searches
+## List of Searches
+1. breadth_first_search 
+2. breadth_first_tree_search 
+3. depth_first_graph_search 
+4. depth_limited_search 
+5. uniform_cost_search 
+6. recursive_best_first_search h_1
+7. greedy_best_first_graph_search h_1
+8. astar_search h_1
 
 ## Problem 1
 
