@@ -14883,8 +14883,20 @@ prediction: Lowchen
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The results are far better than I expected. For images of dog breeds, the predictions were spot on, and if not exact they were from closely related breeds. I specifically chose a couple that I thought might be more rare and/or be images out of the norm.
-For the human detection, in retrospect (confirmation bias), the breeds predicted for the human tests do look like they could be accurate; however, the breeds do differ a lot compared to the minimal variance in the human images. (Yes, I do think Ryan Reynolds, Ryan Gosling, and myself look similar - and we even have similar hair. Haha. Maybe it's my glasses??)</p>
+<p>The results are far better than I expected. For images of dog breeds, the predictions were spot on, and if not exact they were from closely related breeds. I specifically chose a couple that I thought might be more rare and/or be images out of the norm.</p>
+<p>For the human detection, in retrospect (confirmation bias), the breeds predicted for the human tests do look like they could be accurate; however, the breeds do differ a lot compared to the minimal variance in the human images. (Yes, I do think Ryan Reynolds, Ryan Gosling, and myself look similar - and we even have similar hair. Haha. Maybe it's my glasses??)</p>
+<p>This algorithm could potentially be improved by:</p>
+<ol>
+<li>Using an alternate set of initial bottleneck feature weights for transfer learning, such as Inception or Xception.</li>
+<li>Adding additional layers to the transfer learning model, specifically more dense and/or dropout layers similar to the cifar10 example.</li>
+<li>Adding more images to the training data to broaded the exposure the model has to varying photos of breeds existing in the data set as well as more rare breeds. (This would be extremely labor and compute intensive because the images would have to be labeled and the original model recomputed.)</li>
+</ol>
+<p>From a UX and logic perspective the output of the algorithm could be improved by:</p>
+<ul>
+<li>Listing whether human or dog is detected</li>
+<li>If either, print predicted breed</li>
+<li>Print the input image and the best fit breed image side by side for comparison - quick mockup below</li>
+</ul>
 <table>
 <thead><tr>
 <th>Image</th>
@@ -14895,7 +14907,7 @@ For the human detection, in retrospect (confirmation bias), the breeds predicted
 <tbody>
 <tr>
 <td><img src="test_images/rhodesian.jpg" width="200"></td>
-<td>Rhodesian Ridgeback</td>
+<td>German Pincher</td>
 <td>rhodesian.jpg</td>
 </tr>
 <tr>
